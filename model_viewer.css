@@ -1,0 +1,509 @@
+
+/* LOADING SCREEN */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #111 0%, #222 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+#loader-percentage {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  font-weight: 200;
+  color: #e3e3e3;
+  margin-top: 2rem; /* space between SVG and percentage */
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 3.5rem;
+  width: auto; /* allow width to fit content */
+  min-width: 4rem; /* ensures enough space for numbers */
+  text-align: center; /* center the number */
+}
+
+#loader-percentage span {
+  display: inline-block; /* change from block to inline-block */
+  position: relative;     /* relative so it respects the container width */
+  bottom: 0;
+  width: auto;            /* fit content */
+  animation: pushUp 0.3s ease forwards;
+}
+
+.logo-loading {
+  display: flex;
+  justify-content: center; /* horizontally center */
+  align-items: center;     /* vertically center */
+  width: 100%;
+}
+
+.logo-loading svg {
+  display: block;    /* removes inline spacing issues */
+  margin: 0 auto;    /* horizontal centering */
+  width: 250px;      /* smaller size */
+  max-width: 80%;
+  height: auto;
+  overflow: visible; /* prevent clipping */
+  
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 1s linear infinite;
+}
+
+/* Animations and Fonts*/
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes heroSlideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes imageAppearUp {
+  0% {
+    transform: translateY(40%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIcon {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(8px);
+  }
+  60% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: #e3e3e3;
+  background-size: cover;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* HIDE SCROLLBAR */
+/* Hide scrollbar in WebKit (Chrome, Safari, Edge) */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar in Firefox and IE */
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* Also apply to html for Edge compatibility */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Navbar & hero content */
+.navbar {
+  position: fixed;   /* keep it fixed on screen */
+  top: 0;            /* stick to top */
+  margin: 0.5rem;
+  width: 100%;       /* full width */
+  z-index: 999;      /* above other content */
+}
+
+.hero {
+  position: relative;
+  z-index: 2;  /* above gradient & particles */
+  padding: 1rem;
+}
+
+.hero-text {
+  font-family: 'Montserrat', sans-serif;
+  opacity: 0;
+  font-weight: 600;
+  color: #111111;
+  text-transform: uppercase;
+  margin: 5rem 0 2% 0;
+  font-size: clamp(2rem, 6vw, 5rem);
+  animation: heroSlideUp 1s ease-out forwards 1s;
+}
+
+.navbar-brand {
+  font-family: 'MyCustomFont', sans-serif;
+  display: block;
+  text-align: left;
+  margin-left: 0.5rem;
+}
+
+.navbar-brand svg {
+  width: 100%;
+  max-width: clamp(40px, 7vw, 90px);
+  height: auto;
+  display: block;
+  overflow: visible;
+
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 3s forwards ease-in-out 1s;
+}
+
+/* Animate SVG handwriting on hover */
+.navbar-brand:hover svg path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 3s forwards ease-in-out;
+}
+
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><path stroke='%23111111' stroke-width='1' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+}
+
+/* Hamburger button customization */
+.navbar-toggler {
+  position: relative;
+  width: 30px;
+  height: 30px;  /* Increase from 24px to 30px for symmetry */
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Change from space-between to center */
+  align-items: center;  /* Add this */
+  margin: 1rem;
+  z-index: 4;
+  outline: none;
+  box-shadow: none;
+  overflow: visible;
+  opacity: 0;
+  animation: slideLeft 1.5s ease forwards 1s;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.navbar-toggler span {
+  display: block;
+  height: 3px;
+  width: 30px;
+  background-color: #111111;
+  border-radius: 2px;
+  transform-origin: right;
+  position: absolute;
+  right: 0;  /* Add this - aligns to the right */
+  transition: width 0.3s ease, transform 0.3s ease, background-color 0.3s ease, transform-origin 0.3s ease;
+}
+
+/* Position each line when NOT open */
+.navbar-toggler:not(.open) span:nth-child(1) {
+  top: 3px;
+}
+.navbar-toggler:not(.open) span:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.navbar-toggler:not(.open) span:nth-child(3) {
+  bottom: 3px;
+}
+
+/* Hover: inverted stairs - only when NOT open */
+.navbar-toggler:not(.open):hover span:nth-child(1) { width: 30px; }
+.navbar-toggler:not(.open):hover span:nth-child(2) { width: 21px; }
+.navbar-toggler:not(.open):hover span:nth-child(3) { width: 12px; }
+
+/* Click: morph into X */
+.navbar-toggler.open span {
+  transform-origin: center;
+  width: 30px;
+  top: 50%;
+  left: 0;  /* Center the X */
+  right: auto;  /* Override the right: 0 */
+}
+
+.navbar-toggler.open span:nth-child(1) {
+  transform: translateY(-50%) rotate(45deg);
+}
+.navbar-toggler.open span:nth-child(2) {
+  opacity: 0;
+}
+.navbar-toggler.open span:nth-child(3) {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.navbar-toggler.open:hover{
+  transition:transform 0.3s ease;
+  transform: scale(1.1);
+}
+
+/* Acrylic blur overlay */
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;      /* center menu horizontally */
+  align-items: center;          /* center menu vertically */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+}
+
+/* Optional: subtle border shimmer */
+.blur-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+
+/* Show blur when active */
+.blur-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Menu container */
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* top content stays at top, buttons at bottom */
+  align-items: flex-start;        /* default alignment */
+  height: 100%;                   /* full overlay height */
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.menu-top {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1vw, 1rem);
+  align-items: flex-start;
+  padding-inline-start: clamp(8rem, 20vw, 24rem); /* stronger inward push */
+  margin-top: auto; /* static offset from top */
+  margin-bottom: auto;
+}
+
+/* Menu text styling */
+.menu-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  color: #111111;
+  font-size: clamp(1rem, 2.5vw, 2.5rem); /* responsive scaling */
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease, font-size 0.3s ease;
+  text-decoration: none;
+}
+
+.menu-text:hover {
+  color: #565656;
+  transform: scale(1.05);
+}
+
+.submenu {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding: 1rem;
+}
+
+.submenu-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  color: #111111;
+  font-size: clamp(0.8rem, 2.3vw, 1.2rem);
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+}
+
+.submenu-text:hover {
+  color: #565656;
+  transform: scale(1.05);
+}
+
+.submenu-text.no-click {
+  pointer-events: none;   /* disables clicking */
+  cursor: default;        /* removes pointer cursor */
+  color: #111;            /* optional: keep text color same */
+}
+
+.submenu-text.no-click:hover {
+  color: #111;            /* prevent hover color change */
+  transform: none;        /* prevent any hover transform */
+}
+
+/* Show submenu on click (or hover if you want) */
+.submenu.active {
+  display: flex;
+}
+
+/* Bottom icon buttons */
+.menu-buttons {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.icon-btn,
+.icon-btn:hover {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+}
+
+.icon-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.icon-btn:hover img {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* IMPORT BUTTON */
+/* IMPORT BUTTON (Blender-style / matches viewer-notes) */
+.import-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 0.7rem 1.4rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Hover effect */
+.import-btn:hover {
+  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#viewer-notes {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;          /* moved to the left */
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    padding: 15px 18px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: "Montserrat", sans-serif;
+    backdrop-filter: blur(6px);
+    z-index: 2;
+    max-width: 260px;
+    line-height: 1.4;
+    transition: opacity 0.3s ease;
+}
+
+#viewer-notes strong {
+    font-weight: 600;
+    color: #ffd86b;
+}
+
+#viewer-notes:hover {
+    opacity: 0.3;
+    cursor: default;
+}
+
+
+
+/* Small copyright at bottom right */
+.copyright {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  font-size: 12px;
+  color: #111; /* Light gray to match your theme */
+  font-family: 'Montserrat', sans-serif;
+  z-index: 1000;
+  pointer-events: none; /* so it doesn't block clicks */
+}

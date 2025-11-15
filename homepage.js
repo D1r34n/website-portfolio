@@ -799,3 +799,6 @@ document.addEventListener('mousemove', (e) => {
 
 animateMouseParallax();
 }
+
+
+
